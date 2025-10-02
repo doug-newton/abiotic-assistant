@@ -4,15 +4,8 @@ Helps you plan your work efficiently in _Abiotic Factor_ by mapping out crafting
 
 ## Setup
 
-Build:
+Run/Dev:
 
 ```sh
-cd ./abiotic-assistant
-docker build -t abiotic-image .
-```
-
-Run:
-
-```sh
-docker run -d -p 8080:5000 --name abiotic-app abiotic-image:latest 
+docker compose up -d
 ```
