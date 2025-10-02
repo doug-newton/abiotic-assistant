@@ -5,3 +5,9 @@ services:
       - "8080:3000"
     volumes:
       - ./backend:/app
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
