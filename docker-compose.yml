@@ -6,6 +6,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
+      - ABIOTIC_DEV=1
       - ABIOTIC_DEBUG=1
       - ABIOTIC_PORT=3000
   frontend:
