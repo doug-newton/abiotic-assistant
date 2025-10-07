@@ -1,2 +1,4 @@
 db/mongo_passwd
 db/mongo_user
+db/mongo_api_passwd
+db/mongo_api_user

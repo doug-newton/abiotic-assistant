@@ -10,6 +10,8 @@ services:
     secrets:
       - mongo_user
       - mongo_passwd
+      - mongo_api_user
+      - mongo_api_passwd
   backend:
     build: ./backend
     ports:
@@ -32,3 +34,7 @@ secrets:
     file: ./db/mongo_user
   mongo_passwd:
     file: ./db/mongo_passwd
+  mongo_api_user:
+    file: ./db/mongo_api_user
+  mongo_api_passwd:
+    file: ./db/mongo_api_passwd
