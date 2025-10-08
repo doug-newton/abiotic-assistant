@@ -17,11 +17,15 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
     environment:
       - ABIOTIC_DEV=1
       - ABIOTIC_DEBUG=1
       - ABIOTIC_PORT=3000
+      - ABIOTIC_MONGO_DB=abiotic_assistant
+    secrets:
+      - mongo_api_user
+      - mongo_api_passwd
   frontend:
     build: ./frontend
     ports:

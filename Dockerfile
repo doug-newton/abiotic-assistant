@@ -9,7 +9,11 @@ FROM python:3.12-slim
 WORKDIR /app
 COPY ./backend/requirements.txt .
 RUN pip install -r requirements.txt
-COPY ./backend .
-COPY --from=build /app/dist/ /app/static
-RUN mv /app/static/index.html /app/templates
-CMD ["python", "main.py"]
+COPY ./backend/src/ /app/src
+COPY --from=build /app/dist/ /app/src/static
+RUN mv /app/src/static/index.html /app/src/templates
+COPY abiotic_assistant.conf .
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod u+x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["python", "src/main.py"]
