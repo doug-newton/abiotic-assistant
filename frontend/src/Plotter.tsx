@@ -10,23 +10,9 @@ import {
 
 import type { Node, Edge, NodeChange, EdgeChange, Connection } from '@xyflow/react'
 
+import { initialNodes, initialEdges } from './InitialState.contants';
+
 import '@xyflow/react/dist/style.css';
-
-const initialNodes: Node[] = [
-	{
-		id: 'n1',
-		position: { x: 0, y: -50 },
-		data: { label: 'Node 1' },
-		type: 'input'
-	},
-	{
-		id: 'n2',
-		position: { x: 0, y: 50 },
-		data: { label: 'Node 2' }
-	}
-];
-
-const initialEdges: Edge[] = [];
 
 export default function Plotter() {
 
