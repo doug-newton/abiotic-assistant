@@ -1,16 +1,18 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import {
 	ReactFlow,
 	Background,
 	Controls,
 	applyEdgeChanges,
 	applyNodeChanges,
-	addEdge
+	addEdge,
 } from '@xyflow/react';
+
+import type { Node, Edge, NodeChange, EdgeChange, Connection } from '@xyflow/react'
 
 import '@xyflow/react/dist/style.css';
 
-const initialNodes = [
+const initialNodes: Node[] = [
 	{
 		id: 'n1',
 		position: { x: 0, y: -50 },
@@ -24,7 +26,7 @@ const initialNodes = [
 	}
 ];
 
-const initialEdges = [];
+const initialEdges: Edge[] = [];
 
 export default function Plotter() {
 
@@ -32,17 +34,17 @@ export default function Plotter() {
 	const [edges, setEdges] = useState(initialEdges);
 
 	const onNodesChange = useCallback(
-		(changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
+		(changes:NodeChange<Node>[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
 		[]
 	);
 
 	const onEdgesChange = useCallback(
-		(changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
+		(changes:EdgeChange<Edge>[]) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
 		[]
 	);
 
 	const onConnect = useCallback(
-		(params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+		(connection: Connection) => setEdges((edgesSnapshot) => addEdge(connection, edgesSnapshot)),
 		[]
 	);
 
