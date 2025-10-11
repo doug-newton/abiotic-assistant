@@ -1,0 +1,26 @@
+#header {
+	box-sizing: border-box;
+	border: 1px solid white;
+}
+
+#header {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#header > * {
+	flex: 1;
+}
+
+#header h1 {
+	color: #D72638;
+	text-align: center;
+}
+
+.version {
+	font-family: monospace;
+	color: white;
+	position: absolute;
+	right: 3rem;
+}
