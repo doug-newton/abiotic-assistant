@@ -8,11 +8,17 @@ import {
 	addEdge,
 } from '@xyflow/react';
 
-import type { Node, Edge, NodeChange, EdgeChange, Connection } from '@xyflow/react'
+import type { Node, Edge, NodeChange, EdgeChange, Connection, NodeTypes } from '@xyflow/react'
 
 import { initialNodes, initialEdges } from './InitialState.contants';
 
 import '@xyflow/react/dist/style.css';
+
+import ItemNode from './ItemNode';
+
+const nodeTypes: NodeTypes = {
+	itemNode: ItemNode
+};
 
 export default function Plotter() {
 
@@ -37,6 +43,7 @@ export default function Plotter() {
 	return (
 		<ReactFlow
 			colorMode = 'dark'
+			nodeTypes = {nodeTypes}
 			nodes = {nodes}
 			edges = {edges}
 			onNodesChange = {onNodesChange}
