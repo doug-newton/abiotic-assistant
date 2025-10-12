@@ -10,7 +10,6 @@ function Header() {
 	useEffect(() => {
 		async function getApiVersion() {
 			const url = `${API_URL}/v`;
-			console.log(url);
 			const response = await fetch(url);
 			const json = await response.json();
 			setApiVersion(json.version);

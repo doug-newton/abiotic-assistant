@@ -1,6 +1,6 @@
 import './App.css'
-import Header from './Header.tsx'
-import Plotter from './Plotter.tsx'
+import Header from './components/Header.tsx'
+import Plotter from './components/Plotter.tsx'
 
 function App() {
 

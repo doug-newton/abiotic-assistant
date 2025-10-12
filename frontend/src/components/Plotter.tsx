@@ -10,11 +10,11 @@ import {
 
 import type { Node, Edge, NodeChange, EdgeChange, Connection, NodeTypes } from '@xyflow/react'
 
-import { initialNodes, initialEdges } from './InitialState.contants';
+import { initialNodes, initialEdges } from './PlotterInitialState';
 
 import '@xyflow/react/dist/style.css';
 
-import ItemNode from './ItemNode';
+import ItemNode from '../nodes/ItemNode';
 
 const nodeTypes: NodeTypes = {
 	itemNode: ItemNode
