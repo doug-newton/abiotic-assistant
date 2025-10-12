@@ -1,4 +1,4 @@
-import type { Edge, Node, NodeProps } from '@xyflow/react'
+import type { Edge, Node, NodeProps, XYPosition } from '@xyflow/react'
 import { Handle, Position, useReactFlow, useInternalNode } from '@xyflow/react'
 import classes from './ItemNode.module.css'
 
@@ -22,6 +22,73 @@ async function getTransforms(item: string): Promise<ItemTransform[]> {
     return transforms;
 }
 
+function calculatePositions(
+    currentPosition: XYPosition, 
+    itemTransforms: ItemTransform[]) : XYPosition[] {
+
+    const positions : XYPosition[] = []
+    const blockSize = 200;
+    const totalHeight = itemTransforms.length * blockSize;
+
+    let blockTop = currentPosition.y - totalHeight / 2;
+    const itemX = currentPosition.x - blockSize;
+
+    for (let itemTransform of itemTransforms) {
+        const itemStep = blockSize / (itemTransform.input.length + 1);
+        let itemY = blockTop + itemStep;
+
+        for (let i = 0; i < itemTransform.input.length; i++) {
+            positions.push({ x: itemX, y: itemY });
+            itemY += itemStep;
+        }
+
+        blockTop += blockSize;
+    }
+
+    return positions;
+}
+
+function createNodesAndEdges(
+    itemTransforms: ItemTransform[],
+    startNodeID: number,
+    startEdgeID: number,
+    targetID: string
+): [Node[], Edge[]] {
+    const newNodes: Node[] = [];
+    const newEdges: Edge[] = [];
+
+    let newNodeID = startNodeID;
+    let newEdgeID = startEdgeID;
+
+    for (let itemTransform of itemTransforms) {
+        for (let itemData of itemTransform.input) {
+
+            const node: Node<ItemData> = {
+                type: 'itemNode',
+                id: `${newNodeID}`,
+                position: { x: 0, y: 0 },
+                data: itemData
+            };
+
+            const edge: Edge = {
+                id: `${newEdgeID}`,
+                label: itemTransform.transform,
+                source: `${newNodeID}`,
+                target: targetID,
+                animated: true
+            };
+
+            newNodes.push(node);
+            newEdges.push(edge);
+
+            newNodeID++;
+            newEdgeID++;
+        }
+    }
+
+    return [newNodes, newEdges];
+}
+
 export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
     const { item, quantity } = data;
     const internalNode = useInternalNode(id);
@@ -30,54 +97,24 @@ export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
     async function onClick() {
         const itemTransforms: ItemTransform[] = await getTransforms(item);
 
-        const currentX = internalNode ? internalNode.position.x : 0;
-        const currentY = internalNode ? internalNode.position.y : 0;
-        const blockSize = 200;
+        let startNodeID = getNodes().length + 1;
+        let startEdgeID = getEdges().length + 1;
 
-        const itemX = currentX - blockSize;
+        const [newNodes, newEdges] = createNodesAndEdges(
+            itemTransforms,
+            startNodeID,
+            startEdgeID,
+            id
+        );
 
-        const totalHeight = blockSize * (itemTransforms.length);
-        let blockTop = currentY - totalHeight / 2;
+        const nodePositions : XYPosition[] = calculatePositions(
+            internalNode ? internalNode.position : { x: 0, y: 0 },
+            itemTransforms
+        );
 
-        const newNodes: Node[] = [];
-        const newEdges: Edge[] = [];
-        let newNodeID = getNodes().length + 1;
-        let newEdgeID = getEdges().length + 1;
-
-        for (let itemTransform of itemTransforms) {
-            const itemStep = blockSize / (itemTransform.input.length + 1);
-            let itemY = blockTop + itemStep;
-
-            for (let itemData of itemTransform.input) {
-                console.log(`${itemX}, ${itemY}`)
-                const node: Node<ItemData> = {
-                    type: 'itemNode',
-                    id: `${newNodeID}`,
-                    position: {
-                        x: itemX,
-                        y: itemY 
-                    },
-                    data: itemData
-                };
-
-                const edge: Edge = {
-                    id: `${newEdgeID}`,
-                    label: itemTransform.transform,
-                    source: `${newNodeID}`,
-                    target: id,
-                    animated: true
-                };
-
-                newNodes.push(node);
-                newEdges.push(edge);
-
-                newNodeID++;
-                newEdgeID++;
-
-                itemY += itemStep;
-            }
-
-            blockTop += blockSize;
+        for (let i = 0; i < newNodes.length; i++) {
+            newNodes[i].position.x = nodePositions[i].x;
+            newNodes[i].position.y = nodePositions[i].y;
         }
 
         addNodes(newNodes);
