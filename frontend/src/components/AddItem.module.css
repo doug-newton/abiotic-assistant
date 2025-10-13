@@ -1,0 +1,29 @@
+.add-item-panel {
+	background: #140F2D;
+    width: 15rem;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.add-item-heading {
+    color: white;
+    text-align: center;
+    margin-top: 0;
+}
+
+.add-item-list {
+    color: white;
+}
+
+.add-item-item {
+    cursor: pointer;
+}
+
+.add-item-input-wrapper {
+    display: flex;
+}
+
+.add-item-input {
+    width: 100%;
+}

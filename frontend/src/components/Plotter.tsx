@@ -6,15 +6,18 @@ import {
 	applyEdgeChanges,
 	applyNodeChanges,
 	addEdge,
+	Panel,
 } from '@xyflow/react';
 
 import type { Node, Edge, NodeChange, EdgeChange, Connection, NodeTypes } from '@xyflow/react'
 
-import { initialNodes, initialEdges } from './PlotterInitialState';
+const initialNodes: Node[] = [];
+const initialEdges: Edge[] = [];
 
 import '@xyflow/react/dist/style.css';
 
 import ItemNode from '../nodes/ItemNode';
+import AddItem from './AddItem';
 
 const nodeTypes: NodeTypes = {
 	itemNode: ItemNode
@@ -51,6 +54,9 @@ export default function Plotter() {
 			onConnect = {onConnect}
 			fitView
 		>
+			<Panel position="top-right">
+				<AddItem/>
+			</Panel>
 			<Background/>
 			<Controls/>
 		</ReactFlow>

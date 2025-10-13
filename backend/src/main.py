@@ -37,5 +37,54 @@ def get_transforms(item_name):
     except:
         return jsonify({"error": "internal database error"}), 503
 
+@app.route("/api/items")
+def get_items():
+    try:
+        mongo.db.command("ping")
+        result = mongo.db.transforms.aggregate([
+            {
+                '$project': {
+                    'items': {
+                        '$concatArrays': [
+                            '$input', '$output'
+                        ]
+                    }
+                }
+            }, {
+                '$unwind': {
+                    'path': '$items'
+                }
+            }, {
+                '$group': {
+                    '_id': None, 
+                    'items': {
+                        '$addToSet': '$items.item'
+                    }
+                }
+            }, {
+                '$unwind': {
+                    'path': '$items'
+                }
+            }, {
+                '$sort': {
+                    'items': 1
+                }
+            }, {
+                '$group': {
+                    '_id': None, 
+                    'items': {
+                        '$push': '$items'
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': 0
+                }
+            }
+        ])
+        return jsonify(result), 200
+    except:
+        return jsonify({"error": "internal database error"}), 503
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=port, debug=debug_on)
