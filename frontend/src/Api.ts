@@ -2,6 +2,20 @@ import type { ItemTransform } from "./Types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+export async function getApiVersion(): Promise<{version:string}> {
+    const url = `${API_URL}/v`;
+
+    try {
+        const response = await fetch(url);
+        const json: {version:string} = await response.json();
+        return json;
+    }
+    catch (error) {
+        console.error(`Couldn't fetch data: ${error}`);
+        return { version: '?' }
+    }
+}
+
 export async function getTransforms(item: string): Promise<ItemTransform[]> {
     const url = `${API_URL}/transforms/${item}`;
     

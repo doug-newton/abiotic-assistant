@@ -1,34 +1,24 @@
 import { useState, useEffect } from 'react'
 import './Header.css'
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { getApiVersion } from '../Api';
 
 function Header() {
 
-	const [apiVersion, setApiVersion] = useState(null);
+	const [apiVersion, setApiVersion] = useState<string>('...');
 
 	useEffect(() => {
-		async function getApiVersion() {
-			const url = `${API_URL}/v`;
-			const response = await fetch(url);
-			const json = await response.json();
-			setApiVersion(json.version);
-		}
-		getApiVersion();
+		(async() => {
+			const apiInfo: {version:string} = await getApiVersion();
+			setApiVersion(apiInfo.version);
+		})();
 	}, []);
 
 	return (
 		<>
-		<div id="header">
-			<h1>Abiotic Assistant</h1>
-			{
-				apiVersion == null ?
-				(	
-					<div className="version">...</div>
-				) : 
-					<div className="version">{apiVersion}</div>
-			}
-		</div>
+			<div id="header">
+				<h1>Abiotic Assistant</h1>
+				<div className="version">{apiVersion}</div>
+			</div>
 		</>
 	)
 }
