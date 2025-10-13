@@ -8,8 +8,8 @@ import { getItems } from '../Api'
 export default function AddItem() {
 
     const [inputValue, setInputValue] = useState('');
-    const [availableItems, setAvailableItems] = useState<string[]>([]);
-    const [matchingItems, setMatchingItems] = useState<string[]>([]);
+    const [availableItems, setAvailableItems] = useState<ItemData[]>([]);
+    const [matchingItems, setMatchingItems] = useState<ItemData[]>([]);
     const { getNodes, addNodes } = useReactFlow();
 
     function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -18,7 +18,7 @@ export default function AddItem() {
 
     useEffect(() => {
         (async() => {
-            const items: string[] = await getItems();
+            const items: ItemData[] = await getItems();
             setAvailableItems(items);
         })();
     }, [])
@@ -30,11 +30,11 @@ export default function AddItem() {
         }
         setMatchingItems(
             availableItems.filter(
-                item => item.includes(inputValue)
+                item => item.item.includes(inputValue)
         ))
     }, [inputValue, availableItems])
 
-    function addItem(item: string) {
+    function addItem(item: ItemData) {
         const newID = `${getNodes().length + 1}`;
 
         const newNode: Node<ItemData> = {
@@ -44,10 +44,7 @@ export default function AddItem() {
                 x: 0,
                 y: 0,
             },
-            data: {
-                item: item,
-                quantity: 1
-            }
+            data: item
         }
 
         addNodes(newNode)
@@ -63,7 +60,7 @@ export default function AddItem() {
             <ul className={classes['add-item-list']}>
             {
                 matchingItems.map((item, index) => (
-                    <li className={classes['add-item-item']} key={index} onClick={()=>addItem(item)}>{item}</li>
+                    <li className={classes['add-item-item']} key={index} onClick={()=>addItem(item)}>{item.item}</li>
                 ))
             }
             </ul>

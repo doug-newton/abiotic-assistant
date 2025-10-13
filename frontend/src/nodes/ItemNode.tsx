@@ -6,7 +6,8 @@ import { getTransforms } from '../Api';
 import { calcTransformInputPositions, createTransformInputNodesAndEdges } from './NodeLogic';
 
 export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
-    const { item, quantity } = data;
+    const { item, quantity, imageSrc } = data;
+
     const internalNode = useInternalNode(id);
     const { getNodes, addNodes, getEdges, addEdges } = useReactFlow();
 
@@ -39,8 +40,15 @@ export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
 
     return (
         <div className={classes['item-node']}>
-            <button onClick={addItemSources}>S</button>
-            <span>{item} <small>({quantity})</small></span>
+            <div className={classes['image-panel']}>
+                <img src={imageSrc} alt={item} />
+            </div>
+            <button className={classes['close-button']}>X</button>
+            <h3>{item} <sup>({quantity})</sup></h3>
+            <div className={classes['action-area']}>
+                    <button onClick={addItemSources}>find sources</button>
+                    <button>find uses</button>
+            </div>
             <Handle type="target" position={Position.Left}/>
             <Handle type="source" position={Position.Right}/>
         </div>

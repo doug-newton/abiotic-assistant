@@ -29,56 +29,121 @@ def home():
 def get_api_version():
     return jsonify({"version": "0.01"})
 
-@app.route("/api/transforms/<string:item_name>")
-def get_transforms(item_name):
-    try:
-        mongo.db.command("ping")
-        return jsonify(mongo.db.transforms.find({"output.item":item_name}, {"_id":0})), 200
-    except:
-        return jsonify({"error": "internal database error"}), 503
-
 @app.route("/api/items")
 def get_items():
     try:
         mongo.db.command("ping")
-        result = mongo.db.transforms.aggregate([
+        result = mongo.db.items.aggregate([
             {
-                '$project': {
-                    'items': {
-                        '$concatArrays': [
-                            '$input', '$output'
-                        ]
-                    }
-                }
-            }, {
-                '$unwind': {
-                    'path': '$items'
-                }
-            }, {
-                '$group': {
-                    '_id': None, 
-                    'items': {
-                        '$addToSet': '$items.item'
-                    }
-                }
-            }, {
-                '$unwind': {
-                    'path': '$items'
-                }
-            }, {
-                '$sort': {
-                    'items': 1
-                }
-            }, {
-                '$group': {
-                    '_id': None, 
-                    'items': {
-                        '$push': '$items'
-                    }
-                }
+                '$addFields': {
+                    'quantity': 1
+                },
             }, {
                 '$project': {
                     '_id': 0
+                }
+            }
+        ])
+        return jsonify(result), 200
+    except:
+        return jsonify({"error": "internal database error"}), 503
+
+@app.route("/api/transforms/<string:item_name>")
+def get_transforms(item_name):
+    try:
+        mongo.db.command("ping")
+        result = mongo.db.transforms.aggregate([
+            {
+                '$match': {
+                    'output.item': item_name
+                }
+            }, {
+                '$lookup': {
+                    'from': 'items',
+                    'localField': 'input.item',
+                    'foreignField': 'item',
+                    'as': 'input_details',
+                    'pipeline': [
+                        {
+                            '$project': {
+                                '_id': 0
+                            }
+                        }
+                    ]
+                }
+            }, {
+                '$addFields': {
+                    'input': {
+                        '$map': {
+                            'input': '$input',
+                            'as': 'input_item',
+                            'in': {
+                                '$mergeObjects': [
+                                    '$$input_item', {
+                                        '$first': {
+                                            '$filter': {
+                                                'input': '$input_details',
+                                                'cond': {
+                                                    '$in': [
+                                                        '$$input_item.item', [
+                                                            '$$this.item'
+                                                        ]
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$lookup': {
+                    'from': 'items',
+                    'localField': 'output.item',
+                    'foreignField': 'item',
+                    'as': 'output_details',
+                    'pipeline': [
+                        {
+                            '$project': {
+                                '_id': 0
+                            }
+                        }
+                    ]
+                }
+            }, {
+                '$addFields': {
+                    'output': {
+                        '$map': {
+                            'input': '$output',
+                            'as': 'output_item',
+                            'in': {
+                                '$mergeObjects': [
+                                    '$$output_item', {
+                                        '$first': {
+                                            '$filter': {
+                                                'input': '$output_details',
+                                                'cond': {
+                                                    '$in': [
+                                                        '$$output_item.item', [
+                                                            '$$this.item'
+                                                        ]
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': 0,
+                    'input_details': 0,
+                    'output_details': 0
                 }
             }
         ])

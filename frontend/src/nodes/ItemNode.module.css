@@ -1,4 +1,67 @@
-
 .item-node {
-    background-color: blueviolet;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #140F2D;
+    border-radius: 5px;
+    border: 1px solid #3F88C5;
+    padding: 0.5rem;
+    width: 13rem;
+}
+
+.item-node button {
+    background-color: transparent;
+    border: none;
+    box-shadow: -1px -1px #3F88C5;
+    color: #80b2db;
+}
+
+.item-node button.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: #D72638
+}
+
+.item-node button.close-button:hover {
+    border: 1px solid #D72638;
+    box-shadow: none;
+}
+
+.item-node .image-panel {
+    display: flex;
+    justify-content: center;
+}
+
+.item-node img {
+    height: 128px;
+    width: 128px;
+    display: inline-block;
+}
+
+.item-node h3 {
+    color: #3F88C5;
+    text-align: center;
+    margin: 0;
+}
+
+.item-node h3 sup {
+    color: #F49D37;
+}
+
+.item-node .action-area {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.item-node .action-area button {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.item-node button:active {
+    flex: 1;
+    box-shadow: 1px 1px #3F88C5;
 }

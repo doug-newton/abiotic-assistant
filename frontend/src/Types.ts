@@ -1,5 +1,6 @@
 export type ItemData = {
     item: string
+    imageSrc: string
     quantity: number
 }
 

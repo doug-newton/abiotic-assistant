@@ -6,14 +6,15 @@ export function calcTransformInputPositions(
     itemTransforms: ItemTransform[]) : XYPosition[] {
 
     const positions : XYPosition[] = []
-    const blockSize = 200;
-    const totalHeight = itemTransforms.length * blockSize;
+    const blockHeight = 800;
+    const blockWidth = 400;
+    const totalHeight = itemTransforms.length * blockHeight;
 
     let blockTop = currentPosition.y - totalHeight / 2;
-    const itemX = currentPosition.x - blockSize;
+    const itemX = currentPosition.x - blockWidth;
 
     for (let itemTransform of itemTransforms) {
-        const itemStep = blockSize / (itemTransform.input.length + 1);
+        const itemStep = blockHeight / (itemTransform.input.length + 1);
         let itemY = blockTop + itemStep;
 
         for (let i = 0; i < itemTransform.input.length; i++) {
@@ -21,7 +22,7 @@ export function calcTransformInputPositions(
             itemY += itemStep;
         }
 
-        blockTop += blockSize;
+        blockTop += blockHeight;
     }
 
     return positions;

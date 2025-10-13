@@ -85,3 +85,43 @@ db.transforms.insertMany([{
     }
   ]
 }]);
+
+
+db.items.insertMany([
+    {
+        "item": "box_of_screws",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Itemicon_screws.png"
+    },
+    {
+        "item": "exquisite_chain",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Itemicon_silverchain.png"
+    },
+    {
+        "item": "hose",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Itemicon_hose.png"
+    },
+    {
+        "item": "optic_lens",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Optic_Lens.png"
+    },
+    {
+        "item": "pocket_watch",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Pocket_Watch.png"
+    },
+    {
+        "item": "reinforced_hose",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Reinforced_Hose.png"
+    },
+    {
+        "item": "silver_scrap",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Silver_Scrap.png"
+    },
+    {
+        "item": "steel_cable",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Steel_Cable.png"
+    },
+    {
+        "item": "tiny_gears",
+        "imageSrc": "https://abioticfactor.wiki.gg/images/Item_Icon_-_Tiny_Gears.png"
+    }
+])
