@@ -1,8 +1,8 @@
 import { useInternalNode, useReactFlow } from "@xyflow/react";
 import type { Node, Edge, XYPosition } from "@xyflow/react";
-import { getTransforms } from "../Api";
-import type { ItemTransform } from "../Types";
-import { calcTransformInputPositions, createTransformInputNodesAndEdges } from "../nodes/NodeLogic";
+import { getTransforms } from "../api";
+import type { ItemTransform } from "../types";
+import { calcTransformInputPositions, createTransformInputNodesAndEdges } from "../helpers/nodes.helpers";
 import { useCallback } from "react";
 
 export default function useTransformNodes(id: string) {

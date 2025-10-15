@@ -2,8 +2,8 @@ import { useEffect, useState, type ChangeEvent } from 'react'
 import classes from './AddItem.module.css'
 import { useReactFlow } from '@xyflow/react'
 import type { Node } from '@xyflow/react'
-import type { ItemData } from '../Types'
-import { getItems } from '../Api'
+import type { ItemData } from '../types'
+import { getItems } from '../api'
 
 export default function AddItem() {
 

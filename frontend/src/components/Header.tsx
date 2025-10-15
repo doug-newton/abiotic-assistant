@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Header.css'
-import { getApiVersion } from '../Api';
+import { getApiVersion } from '../api';
 
 function Header() {
 

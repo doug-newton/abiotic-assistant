@@ -1,7 +1,7 @@
 import classes from './ItemNode.module.css'
 import type { Node, NodeProps } from '@xyflow/react'
 import { Handle, Position } from '@xyflow/react'
-import type { ItemData } from '../Types';
+import type { ItemData } from '../types';
 import useTransformNodes from '../hooks/useTransformNodes';
 
 export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
