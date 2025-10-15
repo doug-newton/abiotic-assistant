@@ -30,41 +30,63 @@ export function calcTransformInputPositions(
 
 export function createTransformInputNodesAndEdges(
     itemTransforms: ItemTransform[],
-    startNodeID: number,
-    startEdgeID: number,
     targetID: string
 ): [Node[], Edge[]] {
-    const newNodes: Node[] = [];
-    const newEdges: Edge[] = [];
 
-    let newNodeID = startNodeID;
-    let newEdgeID = startEdgeID;
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+    
+    const groupedNodes: {[key:string]:Node<ItemData>[]} = createGroupedNodes(itemTransforms);
 
-    for (let itemTransform of itemTransforms) {
-        for (let itemData of itemTransform.input) {
+    for (let transformType in groupedNodes) {
+        const nodeList: Node<ItemData>[] = groupedNodes[transformType];
+        nodes.push(...nodeList);
+        edges.push(...(createEdges(transformType, nodeList, targetID)));
+    }
+    
+    return [nodes, edges];
+}
 
-            const node: Node<ItemData> = {
-                type: 'itemNode',
-                id: `${newNodeID}`,
-                position: { x: 0, y: 0 },
-                data: itemData
-            };
+function createItemNode(data: ItemData): Node<ItemData> {
+    return {
+        type: 'itemNode',
+        id: crypto.randomUUID(),
+        position: { x: 0, y: 0 },
+        data: data
+    };
+}
 
-            const edge: Edge = {
-                id: `${newEdgeID}`,
-                label: itemTransform.transform,
-                source: `${newNodeID}`,
-                target: targetID,
-                animated: true
-            };
+function createEdges(label: string, sourceNodes: Node[], targetID: string): Edge[] {
+    const edges: Edge[] = [];
+    for (let sourceNode of sourceNodes) {
+        edges.push({
+            id: crypto.randomUUID(),
+            label: label,
+            source: sourceNode.id,
+            target: targetID,
+            animated: true
+        })
+    }
+    return edges;
+}
 
-            newNodes.push(node);
-            newEdges.push(edge);
+function createGroupedNodes(itemTransforms: ItemTransform[])
+    : {[key:string]:Node<ItemData>[]} {
 
-            newNodeID++;
-            newEdgeID++;
+    const nodes: {[key:string]:Node<ItemData>[]} = {};
+
+    for (let transform of itemTransforms) {
+        const transformType = transform.transform;
+
+        if (!Object.hasOwn(nodes, transformType)) {
+            nodes[transformType] = [];
+        }
+
+        for (let item of transform.input) {
+            const node = createItemNode(item);
+            nodes[transformType].push(node);
         }
     }
 
-    return [newNodes, newEdges];
+    return nodes;
 }

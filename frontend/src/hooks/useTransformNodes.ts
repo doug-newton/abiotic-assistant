@@ -7,18 +7,13 @@ import { useCallback } from "react";
 
 export default function useTransformNodes(id: string) {
     const internalNode = useInternalNode(id);
-    const { getNodes, addNodes, getEdges, addEdges } = useReactFlow();
+    const { addNodes, addEdges } = useReactFlow();
 
     const addItemSources = useCallback(async (item: string) => {
         const itemTransforms: ItemTransform[] = await getTransforms(item);
 
-        let startNodeID = getNodes().length + 1;
-        let startEdgeID = getEdges().length + 1;
-
         const [newNodes, newEdges]: [Node[], Edge[]] = createTransformInputNodesAndEdges(
             itemTransforms,
-            startNodeID,
-            startEdgeID,
             id
         );
 
