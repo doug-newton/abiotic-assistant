@@ -1,16 +1,15 @@
 import { useEffect, useState, type ChangeEvent } from 'react'
 import classes from './AddItem.module.css'
-import { useReactFlow } from '@xyflow/react'
-import type { Node } from '@xyflow/react'
 import type { ItemData } from '../types'
 import { getItems } from '../api'
+import useAddNodes from '../hooks/useAddNodes'
 
 export default function AddItem() {
 
     const [inputValue, setInputValue] = useState('');
     const [availableItems, setAvailableItems] = useState<ItemData[]>([]);
     const [matchingItems, setMatchingItems] = useState<ItemData[]>([]);
-    const { getNodes, addNodes } = useReactFlow();
+    const { addItemNode } = useAddNodes();
 
     function onChange(event: ChangeEvent<HTMLInputElement>) {
         setInputValue(event.target.value);
@@ -34,22 +33,6 @@ export default function AddItem() {
         ))
     }, [inputValue, availableItems])
 
-    function addItem(item: ItemData) {
-        const newID = `${getNodes().length + 1}`;
-
-        const newNode: Node<ItemData> = {
-            id: newID,
-            type: 'itemNode',
-            position: {
-                x: 0,
-                y: 0,
-            },
-            data: item
-        }
-
-        addNodes(newNode)
-    }
-
     return (
         <div className={classes['add-item-panel']}>
             <h3 className={classes['add-item-heading']}>Add Item</h3>
@@ -60,7 +43,7 @@ export default function AddItem() {
             <ul className={classes['add-item-list']}>
             {
                 matchingItems.map((item, index) => (
-                    <li className={classes['add-item-item']} key={index} onClick={()=>addItem(item)}>{item.item}</li>
+                    <li className={classes['add-item-item']} key={index} onClick={()=>addItemNode(item)}>{item.item}</li>
                 ))
             }
             </ul>

@@ -47,7 +47,7 @@ export function createTransformInputNodesAndEdges(
     return [nodes, edges];
 }
 
-function createItemNode(data: ItemData): Node<ItemData> {
+export function createItemNode(data: ItemData): Node<ItemData> {
     return {
         type: 'itemNode',
         id: crypto.randomUUID(),
