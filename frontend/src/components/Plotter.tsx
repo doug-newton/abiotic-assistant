@@ -1,12 +1,7 @@
 import { ReactFlow, Background, Controls, Panel, useNodesState, useEdgesState, } from '@xyflow/react';
-import type { NodeTypes } from '@xyflow/react'
-import ItemNode from '../nodes/ItemNode';
 import AddItem from './AddItem';
 import '@xyflow/react/dist/style.css';
-
-const nodeTypes: NodeTypes = {
-	itemNode: ItemNode
-};
+import { nodeTypes } from '../types/node.types';
 
 export default function Plotter() {
 

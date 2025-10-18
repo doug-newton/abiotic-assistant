@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent } from 'react'
 import classes from './AddItem.module.css'
-import type { ItemData } from '../types'
+import type { ItemData } from '../types/data.types'
 import useAddNodes from '../hooks/useAddNodes'
 import useStaticApiData from '../hooks/useStaticApiData'
 

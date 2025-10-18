@@ -1,9 +1,9 @@
 import classes from './ItemNode.module.css'
 import type { Node, NodeProps } from '@xyflow/react'
 import { Handle, Position } from '@xyflow/react'
-import type { ItemData } from '../types';
-import useNodeRelationships from '../hooks/useNodeRelationships';
-import { useDeleteNodes } from '../hooks/useDeleteNodes';
+import type { ItemData } from '../../types/data.types';
+import useNodeRelationships from '../../hooks/useNodeRelationships';
+import { useDeleteNodes } from '../../hooks/useDeleteNodes';
 
 export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
     const { item, quantity, imageSrc } = data;

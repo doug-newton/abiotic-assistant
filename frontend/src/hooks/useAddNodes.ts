@@ -1,5 +1,5 @@
 import { useReactFlow } from "@xyflow/react";
-import type { ItemData } from "../types";
+import type { ItemData } from "../types/data.types";
 import { useCallback } from "react";
 import { createItemNode } from "../helpers/nodes.helpers";
 

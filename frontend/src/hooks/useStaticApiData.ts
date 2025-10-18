@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getApiVersion, getItems } from "../api";
-import type { ItemData } from "../types";
+import { getApiVersion, getItems } from "../helpers/api.helpers";
+import type { ItemData } from "../types/data.types";
 
 export default function useStaticApiData() {
 

@@ -1,4 +1,4 @@
-import type { ItemData, ItemTransform } from "./types";
+import type { ItemData, ItemTransform } from "../types/data.types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

@@ -1,5 +1,5 @@
 import type { Node, Edge, XYPosition } from "@xyflow/react";
-import type { ItemData, ItemTransform } from "../types";
+import type { ItemData, ItemTransform } from "../types/data.types";
 
 export function calcTransformInputPositions(
     currentPosition: XYPosition, 
