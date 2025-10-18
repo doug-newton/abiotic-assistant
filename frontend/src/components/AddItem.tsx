@@ -1,21 +1,14 @@
-import { useEffect, useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import classes from './AddItem.module.css'
 import type { ItemData } from '../types'
-import { getItems } from '../api'
 import useAddNodes from '../hooks/useAddNodes'
+import useStaticApiData from '../hooks/useStaticApiData'
 
 export default function AddItem() {
 
     const [inputValue, setInputValue] = useState('');
-    const [availableItems, setAvailableItems] = useState<ItemData[]>([]);
     const { addItemNode } = useAddNodes();
-
-    useEffect(() => {
-        (async() => {
-            const items: ItemData[] = await getItems();
-            setAvailableItems(items);
-        })();
-    }, [])
+    const { availableItems } = useStaticApiData();
 
     function onChange(event: ChangeEvent<HTMLInputElement>) {
         setInputValue(event.target.value);

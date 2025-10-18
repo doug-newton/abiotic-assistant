@@ -1,17 +1,9 @@
-import { useState, useEffect } from 'react'
 import './Header.css'
-import { getApiVersion } from '../api';
+import useStaticApiData from '../hooks/useStaticApiData';
 
 function Header() {
 
-	const [apiVersion, setApiVersion] = useState<string>('...');
-
-	useEffect(() => {
-		(async() => {
-			const apiInfo: {version:string} = await getApiVersion();
-			setApiVersion(apiInfo.version);
-		})();
-	}, []);
+	const { apiVersion } = useStaticApiData();
 
 	return (
 		<>
