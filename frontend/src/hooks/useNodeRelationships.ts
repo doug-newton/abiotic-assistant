@@ -5,7 +5,7 @@ import type { ItemTransform } from "../types";
 import { calcTransformInputPositions, createTransformInputNodesAndEdges } from "../helpers/nodes.helpers";
 import { useCallback } from "react";
 
-export default function useTransformNodes(id: string) {
+export default function useNodeRelationships(id: string) {
     const internalNode = useInternalNode(id);
     const { addNodes, addEdges } = useReactFlow();
 

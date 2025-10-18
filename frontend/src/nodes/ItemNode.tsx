@@ -2,11 +2,11 @@ import classes from './ItemNode.module.css'
 import type { Node, NodeProps } from '@xyflow/react'
 import { Handle, Position } from '@xyflow/react'
 import type { ItemData } from '../types';
-import useTransformNodes from '../hooks/useTransformNodes';
+import useNodeRelation from '../hooks/useNodeRelationships';
 
 export default function ItemNode({ id, data }: NodeProps<Node<ItemData>>) {
     const { item, quantity, imageSrc } = data;
-    const { addItemSources } = useTransformNodes(id);
+    const { addItemSources } = useNodeRelation(id);
 
     return (
         <div className={classes['item-node']}>
