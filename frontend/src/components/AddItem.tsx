@@ -8,12 +8,7 @@ export default function AddItem() {
 
     const [inputValue, setInputValue] = useState('');
     const [availableItems, setAvailableItems] = useState<ItemData[]>([]);
-    const [matchingItems, setMatchingItems] = useState<ItemData[]>([]);
     const { addItemNode } = useAddNodes();
-
-    function onChange(event: ChangeEvent<HTMLInputElement>) {
-        setInputValue(event.target.value);
-    }
 
     useEffect(() => {
         (async() => {
@@ -22,16 +17,14 @@ export default function AddItem() {
         })();
     }, [])
 
-    useEffect(() => {
-        if (inputValue == '') {
-            setMatchingItems([]);
-            return;
-        }
-        setMatchingItems(
-            availableItems.filter(
-                item => item.item.includes(inputValue)
-        ))
-    }, [inputValue, availableItems])
+    function onChange(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue(event.target.value);
+    }
+
+    const matchingItems: ItemData[] = 
+        inputValue.length > 1 ? 
+            availableItems.filter( item => item.item.includes(inputValue))
+        : []
 
     return (
         <div className={classes['add-item-panel']}>
