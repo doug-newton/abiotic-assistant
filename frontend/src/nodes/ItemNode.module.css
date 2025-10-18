@@ -17,14 +17,14 @@
     color: #80b2db;
 }
 
-.item-node button.close-button {
+.item-node button.delete-button {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     color: #D72638
 }
 
-.item-node button.close-button:hover {
+.item-node button.delete-button:hover {
     border: 1px solid #D72638;
     box-shadow: none;
 }
