@@ -1,4 +1,4 @@
-import { ReactFlow, Background, Controls, useNodesState, useEdgesState, } from '@xyflow/react';
+import { ReactFlow, Background, Controls, useNodesState, useEdgesState, useReactFlow, type XYPosition } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { nodeTypes } from '../types/node.types';
 import useDragAndDrop from '../hooks/useDragAndDrop';
@@ -11,13 +11,19 @@ export default function Plotter() {
 	const [edges, , onEdgesChange] = useEdgesState([]);
 	const [draggedItem, ] = useDragAndDrop();
 	const {addItemNode} = useAddNodes();
+	const {screenToFlowPosition} = useReactFlow();
 
 	const onDrop = useCallback((event: DragEvent) => {
 		event.preventDefault();
-		if (draggedItem != null) {
-			addItemNode(draggedItem);
+		if (draggedItem == null) {
+			return;
 		}
-	}, [draggedItem]);
+		const position: XYPosition = screenToFlowPosition({
+			x: event.clientX,
+			y: event.clientY
+		});
+		addItemNode(draggedItem, position);
+	}, [screenToFlowPosition, draggedItem]);
 
 	return (
 		<ReactFlow
