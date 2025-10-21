@@ -3,6 +3,7 @@ import './App.css'
 import AddItem from './components/AddItem.tsx'
 import Header from './components/Header.tsx'
 import Plotter from './components/Plotter.tsx'
+import DragAndDropProvider from './providers/DragAndDropProvider.tsx'
 
 function App() {
 
@@ -12,8 +13,10 @@ function App() {
 				<Header />
 				<div id="content">
 					<ReactFlowProvider>
-						<Plotter />
-						<AddItem />
+						<DragAndDropProvider>
+							<Plotter />
+							<AddItem />
+						</DragAndDropProvider>
 					</ReactFlowProvider>
 				</div>
 			</div>
