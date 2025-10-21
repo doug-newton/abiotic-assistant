@@ -1,4 +1,6 @@
+import { ReactFlowProvider } from '@xyflow/react'
 import './App.css'
+import AddItem from './components/AddItem.tsx'
 import Header from './components/Header.tsx'
 import Plotter from './components/Plotter.tsx'
 
@@ -7,9 +9,12 @@ function App() {
 	return (
 		<>
 			<div id="main">
-				<Header/>
+				<Header />
 				<div id="content">
-					<Plotter/>
+					<ReactFlowProvider>
+						<Plotter />
+						<AddItem />
+					</ReactFlowProvider>
 				</div>
 			</div>
 		</>

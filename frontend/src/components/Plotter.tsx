@@ -1,5 +1,4 @@
-import { ReactFlow, Background, Controls, Panel, useNodesState, useEdgesState, } from '@xyflow/react';
-import AddItem from './AddItem';
+import { ReactFlow, Background, Controls, useNodesState, useEdgesState, } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { nodeTypes } from '../types/node.types';
 
@@ -18,9 +17,6 @@ export default function Plotter() {
 			onEdgesChange = {onEdgesChange}
 			fitView
 		>
-			<Panel position="top-right">
-				<AddItem/>
-			</Panel>
 			<Background/>
 			<Controls/>
 		</ReactFlow>
