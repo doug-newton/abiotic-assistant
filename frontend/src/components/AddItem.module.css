@@ -14,10 +14,27 @@
 
 .add-item-list {
     color: white;
+    padding: 0;
 }
 
-.add-item-item {
+li.add-item-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     cursor: pointer;
+    list-style-type: none;
+    justify-content: space-between;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    border: 1px solid gray;
+}
+
+li.add-item-item > span {
+    flex: 1;
+}
+
+.add-item-img {
+    width: 2rem;
 }
 
 .add-item-input-wrapper {

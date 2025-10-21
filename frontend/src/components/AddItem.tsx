@@ -17,7 +17,7 @@ export default function AddItem() {
     const matchingItems: ItemData[] = 
         inputValue.length > 1 ? 
             availableItems.filter( item => item.item.includes(inputValue))
-        : []
+        : availableItems;
 
     return (
         <div className={classes['add-item-panel']}>
@@ -29,7 +29,10 @@ export default function AddItem() {
             <ul className={classes['add-item-list']}>
             {
                 matchingItems.map((item, index) => (
-                    <li className={classes['add-item-item']} key={index} onClick={()=>addItemNode(item)}>{item.item}</li>
+                    <li className={classes['add-item-item']} key={index} onClick={()=>addItemNode(item)}>
+                        <img className={classes['add-item-img']} src={item.imageSrc} alt={item.item} />
+                        <span>{item.item}</span>
+                    </li>
                 ))
             }
             </ul>
