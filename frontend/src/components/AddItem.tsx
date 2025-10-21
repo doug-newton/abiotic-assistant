@@ -1,14 +1,15 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, DragEvent } from 'react'
 import classes from './AddItem.module.css'
 import type { ItemData } from '../types/data.types'
-import useAddNodes from '../hooks/useAddNodes'
 import useStaticApiData from '../hooks/useStaticApiData'
+import useDragAndDrop from '../hooks/useDragAndDrop'
 
 export default function AddItem() {
 
     const [inputValue, setInputValue] = useState('');
-    const { addItemNode } = useAddNodes();
     const { availableItems } = useStaticApiData();
+    const [, setDraggedItem] = useDragAndDrop();
 
     function onChange(event: ChangeEvent<HTMLInputElement>) {
         setInputValue(event.target.value);
@@ -18,6 +19,11 @@ export default function AddItem() {
         inputValue.length > 1 ? 
             availableItems.filter( item => item.item.includes(inputValue))
         : availableItems;
+
+    function onDragStart(event: DragEvent, itemData: ItemData) {
+        setDraggedItem(itemData);
+        event.dataTransfer.effectAllowed = 'move';
+    }
 
     return (
         <div className={classes['add-item-panel']}>
@@ -29,7 +35,12 @@ export default function AddItem() {
             <ul className={classes['add-item-list']}>
             {
                 matchingItems.map((item, index) => (
-                    <li className={classes['add-item-item']} key={index} onClick={()=>addItemNode(item)}>
+                    <li 
+                        draggable 
+                        key={index} 
+                        className={classes['add-item-item']} 
+                        onDragStart={(event)=>onDragStart(event, item)}
+                    >
                         <img className={classes['add-item-img']} src={item.imageSrc} alt={item.item} />
                         <span>{item.item}</span>
                     </li>
